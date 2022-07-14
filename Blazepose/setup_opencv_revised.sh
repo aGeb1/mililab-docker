@@ -1,25 +1,14 @@
 set -e
-if [ "$1" ] && [ "$1" != "config_only" ]
-  then
-    echo "Unknown input argument. Do you mean \"config_only\"?"
-    exit 0
-fi
 
 opencv_build_file="$( cd "$(dirname "$0")" ; pwd -P )"/third_party/opencv_linux.BUILD
 workspace_file="$( cd "$(dirname "$0")" ; pwd -P )"/WORKSPACE
 
 echo "Installing OpenCV from source"
-if [[ -x "$(command -v apt)" ]]; then
-  apt-get update && apt-get install -y build-essential git
-  apt-get install -y cmake ffmpeg libavformat-dev libdc1394-22-dev libgtk2.0-dev \
-                   libjpeg-dev libpng-dev libswscale-dev libtbb2 libtbb-dev \
-                   libtiff-dev
-elif [[ -x "$(command -v dnf)" ]]; then
-  dnf update && dnf install cmake gcc gcc-c git
-  dnf install ffmpeg-devel libdc1394-devel gtk2-devel \
-                   libjpeg-turbo-devel libpng-devel tbb-devel \
-                   libtiff-devel
-fi
+
+apt-get update && apt-get install -y build-essential git
+apt-get install -y cmake ffmpeg libavformat-dev libdc1394-22-dev libgtk2.0-dev \
+                libjpeg-dev libpng-dev libswscale-dev libtbb2 libtbb-dev \
+                libtiff-dev
 rm -rf /tmp/build_opencv
 mkdir /tmp/build_opencv
 cd /tmp/build_opencv
